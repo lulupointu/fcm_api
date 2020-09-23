@@ -103,6 +103,8 @@ class FcmAPI {
           "\n--subrequest_boundary--",
     );
 
+    // print(response.body);
+
     // TODO: Detect errors inside the batch
     if (response.statusCode != 200) throw SendError(error: response.body);
   }
@@ -141,24 +143,53 @@ main() async {
 
   // Create some test messages
   Message message1 = Message(
-        (b) => b
-      ..token = 'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data = BuiltMap<String, String>.from({'some data key 1': 'some data value 1'}).toBuilder(),
+    (b) => b
+      ..token =
+          'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
+      ..data =
+          BuiltMap<String, String>.from({'some data key 1': 'some data value 1'}).toBuilder(),
   );
   Message message2 = Message(
-        (b) => b
-      ..token = 'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data = BuiltMap<String, String>.from({'some data key 2': 'some data value 2'}).toBuilder(),
+    (b) => b
+      ..token =
+          'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
+      ..data =
+          BuiltMap<String, String>.from({'some data key 2': 'some data value 2'}).toBuilder(),
   );
   Message message3 = Message(
-        (b) => b
-      ..token = 'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data = BuiltMap<String, String>.from({'some data key 3': 'some data value 3'}).toBuilder(),
+    (b) => b
+      ..token =
+          'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
+      ..data =
+          BuiltMap<String, String>.from({'some data key 3': 'some data value 3'}).toBuilder(),
   );
 
-  await fcmAPI.send(message1);
+  // await fcmAPI.send(message1);
+  //
+  // await fcmAPI.sendAll([message2, message3]);
 
-  await fcmAPI.sendAll([message2, message3]);
+  List<String> tokens = [
+    'eQAvEHkzQAOB1OFqUuubk_:APA91bGCWX4MQRo4_BmodZHimClmNWlftO2YYMCwjrJxqw8Ih3L5HPInEfWEVo5NoVa3UEUxFvxWUFbJ101yThP6kOX4BUe1jB4UFjVw_wJ9kBWa8fMfpKkBSGVvPVwHJdnmvlrrJegx',
+    'c-Wjh0UpRUWhbw9dTLWadk:APA91bHHQt6xAZlCxshjvvkyOQ1M6vOtcnJv2HJDhoN3aAWKJKB4gqUgjTcv_CbNnlZUxv-n0ghvJSiAiiyjrfvUOLwHo_yHQ-daES-akPpPJxXV3Lbd2tW2YYma6PtZqlvI80NAOaZ0',
+    'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK',
+  ];
+  // Send the notifications
+  await fcmAPI.sendAll(tokens
+      .map((String token) => Message(
+            (b) => b
+              ..token = token
+              ..data = BuiltMap<String, String>.from({
+                'title': 'relationStatusScolaireUpdate',
+                'relationStatus': jsonEncode({
+                  'statusScolaire': 'askedBinome',
+                  'login': 'vannier',
+                  'otherLogin': 'delsol_l'
+                }),
+                'binomeName': 'Emilien',
+                'binomeSurname': 'Vannier',
+              }).toBuilder(),
+          ))
+      .toList());
 
   fcmAPI.close();
 }
