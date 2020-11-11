@@ -31,13 +31,15 @@ class FcmAPI {
     _projectId = secret['project_id'];
 
     // Get the credentials
-    final accountCredentials = new auth.ServiceAccountCredentials.fromJson(secret);
+    final accountCredentials =
+        new auth.ServiceAccountCredentials.fromJson(secret);
 
     // Set the scope to access fmc services
     var scopes = [fmc.FcmApi.CloudPlatformScope];
 
     // Connect
-    this.client = await auth.clientViaServiceAccount(accountCredentials, scopes);
+    this.client =
+        await auth.clientViaServiceAccount(accountCredentials, scopes);
 
     // Create a FmcApi instance to send the messages
     _fcmApi = fmc.FcmApi(client);
@@ -68,8 +70,8 @@ class FcmAPI {
 
     final List<Future> requests = [];
     for (int index = 0; index <= messages.length ~/ 500; index++)
-      requests.add(
-          _sendBatch(messages.sublist(index * 500, min((index + 1) * 500, messages.length))));
+      requests.add(_sendBatch(messages.sublist(
+          index * 500, min((index + 1) * 500, messages.length))));
 
     Future.wait(requests);
   }
@@ -134,9 +136,9 @@ class SendError extends FcmAPIError {
 
 main() async {
   // Grab the secret file
-  Map<String, dynamic> secret = jsonDecode(
-      File('/home/lulupointu/Downloads/tinter-2c20c-firebase-adminsdk-miqgz-8935722edb.json')
-          .readAsStringSync());
+  Map<String, dynamic> secret = jsonDecode(File(
+          '/Users/lulupointu/Downloads/tinter-2c20c-firebase-adminsdk-miqgz-ccd045bcb3.json')
+      .readAsStringSync());
 
   FcmAPI fcmAPI = FcmAPI();
   await fcmAPI.initializeApp(secret: secret);
@@ -146,22 +148,22 @@ main() async {
     (b) => b
       ..token =
           'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data =
-          BuiltMap<String, String>.from({'some data key 1': 'some data value 1'}).toBuilder(),
+      ..data = BuiltMap<String, String>.from(
+          {'some data key 1': 'some data value 1'}).toBuilder(),
   );
   Message message2 = Message(
     (b) => b
       ..token =
           'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data =
-          BuiltMap<String, String>.from({'some data key 2': 'some data value 2'}).toBuilder(),
+      ..data = BuiltMap<String, String>.from(
+          {'some data key 2': 'some data value 2'}).toBuilder(),
   );
   Message message3 = Message(
     (b) => b
       ..token =
           'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK'
-      ..data =
-          BuiltMap<String, String>.from({'some data key 3': 'some data value 3'}).toBuilder(),
+      ..data = BuiltMap<String, String>.from(
+          {'some data key 3': 'some data value 3'}).toBuilder(),
   );
 
   // await fcmAPI.send(message1);
@@ -169,15 +171,16 @@ main() async {
   // await fcmAPI.sendAll([message2, message3]);
 
   List<String> tokens = [
-    'eQAvEHkzQAOB1OFqUuubk_:APA91bGCWX4MQRo4_BmodZHimClmNWlftO2YYMCwjrJxqw8Ih3L5HPInEfWEVo5NoVa3UEUxFvxWUFbJ101yThP6kOX4BUe1jB4UFjVw_wJ9kBWa8fMfpKkBSGVvPVwHJdnmvlrrJegx',
-    'c-Wjh0UpRUWhbw9dTLWadk:APA91bHHQt6xAZlCxshjvvkyOQ1M6vOtcnJv2HJDhoN3aAWKJKB4gqUgjTcv_CbNnlZUxv-n0ghvJSiAiiyjrfvUOLwHo_yHQ-daES-akPpPJxXV3Lbd2tW2YYma6PtZqlvI80NAOaZ0',
-    'dOM29qBIRse08oVCnF1G9s:APA91bGmopOKRKonCS0kOwW4bXajjO0H--SOVzXfCXf_fE7rujDkeoeT58n3oybdoOPk7_2ndS0KnaDByOXAwDuRe5sUmaRgKAM4HrJJ3sNPsY_rJoKUyrVu4vt3lUpRea6rkSnSAhpK',
+    'fUPorhEruE-yvpIHdZ5k3j:APA91bGwQM4pLa33d_nlcI4zcWhBJve_KbWf5_EaGF-QlPl_aRcwU_jfYrDLyQwZkTN18msxEnLSWcz3dptsNFDz6LUa-ox8z0UksCCCDnZxT0oil_75Y3blyBcW9zM2hyoh5O-1_qG4',
   ];
   // Send the notifications
   await fcmAPI.sendAll(tokens
       .map((String token) => Message(
             (b) => b
               ..token = token
+              ..notification = Notification((b) => b
+                ..title = 'Notification title'
+                ..body = 'Notification body').toBuilder()
               ..data = BuiltMap<String, String>.from({
                 'title': 'relationStatusScolaireUpdate',
                 'relationStatus': jsonEncode({
