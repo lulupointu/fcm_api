@@ -16,7 +16,7 @@ Logger _logger = Logger('FcmAPI');
 
 class FcmAPI {
   auth.AutoRefreshingAuthClient client;
-  fmc.FcmApi _fcmApi;
+  fmc.FirebaseCloudMessagingApi _fcmApi;
   String _projectId;
 
   /// initializeApp connect to firebase servers
@@ -35,14 +35,14 @@ class FcmAPI {
         new auth.ServiceAccountCredentials.fromJson(secret);
 
     // Set the scope to access fmc services
-    var scopes = [fmc.FcmApi.CloudPlatformScope];
+    var scopes = [fmc.FirebaseCloudMessagingApi.cloudPlatformScope];
 
     // Connect
     this.client =
         await auth.clientViaServiceAccount(accountCredentials, scopes);
 
     // Create a FmcApi instance to send the messages
-    _fcmApi = fmc.FcmApi(client);
+    _fcmApi = fmc.FirebaseCloudMessagingApi(client);
   }
 
   /// Send a message to specified registration token
@@ -84,7 +84,7 @@ class FcmAPI {
     assert(messages.length <= 500);
 
     var response = await http.post(
-      'https://fcm.googleapis.com/batch',
+      Uri.parse('https://fcm.googleapis.com/batch'),
       headers: {
         'Authorization': 'Bearer ${client.credentials.accessToken.data}',
         'Content-Type': 'multipart/mixed; boundary=subrequest_boundary',
@@ -137,7 +137,7 @@ class SendError extends FcmAPIError {
 main() async {
   // Grab the secret file
   Map<String, dynamic> secret = jsonDecode(File(
-          '/Users/lulupointu/Downloads/tinter-2c20c-firebase-adminsdk-miqgz-ccd045bcb3.json')
+          '/home/lulupointu/Downloads/tinter-2c20c-firebase-adminsdk-miqgz-458f781f16.json')
       .readAsStringSync());
 
   FcmAPI fcmAPI = FcmAPI();
@@ -171,7 +171,9 @@ main() async {
   // await fcmAPI.sendAll([message2, message3]);
 
   List<String> tokens = [
+    'fK2Q4In-SyqxCzP4g-ATn8:APA91bEY68QW5ovEOJoWZWymeTtCuPua1YbnHJGagUf8UF2fPOop4xhBTgAErDefOXzARRppVmqMWkmNOqjvtONjvCwz-j08lrQ49ryhqwMl53rZL3Pk3CSTYDbAHGWV_mGQOeFHnrlD',
     'fUPorhEruE-yvpIHdZ5k3j:APA91bGwQM4pLa33d_nlcI4zcWhBJve_KbWf5_EaGF-QlPl_aRcwU_jfYrDLyQwZkTN18msxEnLSWcz3dptsNFDz6LUa-ox8z0UksCCCDnZxT0oil_75Y3blyBcW9zM2hyoh5O-1_qG4',
+    'eM6r8LkuT_q41BOgwifRnR:APA91bGbVpuoVAZWXZ-zlKZX-G1KWowCQ6Ht2EOK6ixpGEikigCGatXEMO8kLtnvBb5nj8ldzuDahKYOkQ7TUYrv3aJA2cP3zXmDdGy4m3zysKF_DMWFNKoUR9XW__ymx6g2xWsXZHHS',
   ];
   // Send the notifications
   await fcmAPI.sendAll(tokens

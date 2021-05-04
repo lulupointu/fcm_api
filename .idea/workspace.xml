@@ -3,13 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ce18d904-6cb1-481e-af8c-7b0e3c6a107e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/pub/bin/build_runner/build_runner.dart.snapshot.dart2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/pub/bin/build_runner/graph_inspector.dart.snapshot.dart2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/pub/bin/sdk-version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/FcmAPI.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/FcmAPI.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +57,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="623" y="236" width="672" height="678" key="search.everywhere.popup" timestamp="1600380016740">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="100" y="89" width="1720" height="891" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1620146154462">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="623" y="236" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1600380016740" />
+    <state x="100" y="89" width="1720" height="891" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1620146154462" />
   </component>
 </project>
